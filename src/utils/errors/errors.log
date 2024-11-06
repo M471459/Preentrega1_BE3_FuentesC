@@ -1,0 +1,8 @@
+[33merror[39m: usuario invalido
+[33merror[39m: usuario invalido:null
+[33merror[39m: usuario invalido:m7@test.com
+[33merror[39m: password inválida:m2@test.com
+[33merror[39m: password inválida:m2@test.com
+[31mfatal[39m: GET /api/users/671fbc32612052af3f7cfcca - ERRORS IS NOT DEFINED
+[33merror[39m: GET /api/users/671fbc32612052af3f7cfcca - NOT FOUND
+[33merror[39m: GET /api/users/3 - NOT FOUND
