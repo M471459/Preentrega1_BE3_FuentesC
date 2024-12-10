@@ -1,0 +1,190 @@
+openapi: 3.0.0
+info:
+  title: Product API
+  description: API para gestionar productos.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000/api/
+    description: Servidor local de desarrollo
+paths:
+  /api/products:
+    get:
+      summary: Obtiene todos los productos
+      parameters:
+        - name: limit
+          in: query
+          description: Límite de productos a devolver.
+          required: false
+          schema:
+            type: integer
+        - name: page
+          in: query
+          description: Página de productos a devolver.
+          required: false
+          schema:
+            type: integer
+        - name: sort
+          in: query
+          description: Orden de los productos (ascendente o descendente).
+          required: false
+          schema:
+            type: string
+        - name: category
+          in: query
+          description: Categoría de los productos a filtrar.
+          required: false
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Estado de los productos (activo/inactivo).
+          required: false
+          schema:
+            type: boolean
+      responses:
+        201:
+          description: Lista de productos obtenida con éxito.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  products:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Product"
+        500:
+          description: Error interno del servidor.
+    post:
+      summary: Crea un nuevo producto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
+      responses:
+        201:
+          description: Producto creado con éxito.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  product:
+                    $ref: "#/components/schemas/Product"
+        500:
+          description: Error interno del servidor.
+  /api/products/{id}:
+    get:
+      summary: Obtiene un producto por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID del producto.
+      responses:
+        201:
+          description: Producto obtenido con éxito.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  product:
+                    $ref: "#/components/schemas/Product"
+        404:
+          description: No se encontró el producto.
+        500:
+          description: Error interno del servidor.
+    put:
+      summary: Actualiza un producto por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID del producto.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
+      responses:
+        201:
+          description: Producto actualizado con éxito.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  product:
+                    $ref: "#/components/schemas/Product"
+        500:
+          description: Error interno del servidor.
+    delete:
+      summary: Elimina un producto por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID del producto.
+      responses:
+        201:
+          description: Producto eliminado con éxito.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  msg:
+                    type: string
+        404:
+          description: Producto no encontrado.
+        500:
+          description: Error interno del servidor.
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Título del producto.
+        description:
+          type: string
+          description: Descripción del producto.
+        code:
+          type: string
+          description: Código único del producto.
+        stock:
+          type: integer
+          description: Cantidad en stock del producto.
+        status:
+          type: boolean
+          description: Estado del producto.
+        category:
+          type: string
+          description: Categoría del producto.
+        price:
+          type: number
+          description: Precio del producto.
+        thumbnail:
+          type: array
+          items:
+            type: string
+          description: URL de las miniaturas del producto.

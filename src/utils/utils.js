@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import passport from "passport";
 
 export const passportCall = (estrategia) => (req, res, next) => {

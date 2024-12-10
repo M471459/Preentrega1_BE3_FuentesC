@@ -34,11 +34,11 @@ export const iniciaPassport = () => {
             winstonLogger.info("usuario repetido");
             return done(null, false);
           }
-
           let nuevoUsuario = await UsuariosDAO.create({
             email: username,
             last_name: usuarioParaDB.name,
             first_name: usuarioParaDB.lastname,
+            role: usuarioParaDB.role,
             password: generaHash(usuarioParaDB.password),
           });
           const usuarioRegistrado = new UsuariosDTO(nuevoUsuario);

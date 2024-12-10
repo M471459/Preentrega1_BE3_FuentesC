@@ -6,6 +6,7 @@ export const usuariosModelo = mongoose.model(
     {
       first_name: { type: String },
       last_name: { type: String },
+      role: { type: String },
       email: { type: String, unique: true },
       password: { type: String, required: true },
       organization: {

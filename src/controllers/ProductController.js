@@ -12,7 +12,7 @@ async function getProductsAll(req, res) {
     status
   );
   try {
-    return res.status(200).json({ status: "OK", products });
+    return res.status(201).json({ status: "OK", products });
   } catch {
     res
       .status(500)
@@ -29,7 +29,7 @@ async function getProductBy(req, res) {
         error: "No existe el producto",
       });
     }
-    return res.status(200).json({ product });
+    return res.status(201).json({ product });
   } catch {
     res
       .status(500)
@@ -55,7 +55,7 @@ async function updateProduct(req, res) {
   const body = req.body;
   let product = await productsService.updateProduct(id, body);
   try {
-    res.status(200).json({ status: "ok", product });
+    res.status(201).json({ status: "ok", product });
   } catch {
     res
       .status(500)
@@ -72,7 +72,7 @@ async function deleteProduct(req, res) {
         status: "error",
         msg: `No existe el producto`,
       });
-    return res.status(200).json({
+    return res.status(201).json({
       status: "OK",
       msg: `El producto  ha sido eliminado con éxito`,
     });

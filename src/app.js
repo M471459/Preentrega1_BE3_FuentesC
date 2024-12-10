@@ -9,6 +9,9 @@ import cors from "cors";
 import winston from "./middlewares/winstonLogger.mid.js";
 import winstonLogger from "./utils/winston.util.js";
 import errorHandler from "./middlewares/errorHandler.mid.js";
+import swaggerJsdoc from "swagger-jsdoc";
+import { serve, setup } from "swagger-ui-express";
+import opts from "../src/utils/swagger.util.js";
 
 connectMongoDB();
 const app = express();
@@ -25,6 +28,8 @@ app.use(express.static("./src/public"));
 iniciaPassport();
 app.use(passport.initialize());
 app.use(winston);
+const specs = swaggerJsdoc(opts);
+app.use("/api/docs", serve, setup(specs));
 app.use("/api", router);
 app.use(errorHandler);
 
@@ -35,3 +40,5 @@ app.get("/", (req, res) => {
 const httpServer = app.listen(config.PORT, () => {
   winstonLogger.info(`Servidor escuchando en el Puerto ${config.PORT}`);
 });
+
+export default app;
